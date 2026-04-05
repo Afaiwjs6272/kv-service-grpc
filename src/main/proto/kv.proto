@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package storage;
+
+option java_package = "ru.ukhanov.grpc";
+option java_outer_classname = "KvProto";
+option java_multiple_files = true;
+
+service KeyValueStorage {
+  rpc Insert(InsertRequest) returns (InsertResponse);
+  rpc Retrieve(RetrieveRequest) returns (RetrieveResponse);
+  rpc Remove(RemoveRequest) returns (RemoveResponse);
+  rpc Scan(ScanRequest) returns (stream Record);
+  rpc GetTotal(TotalRequest) returns (TotalResponse);
+}
+
+message InsertRequest {
+  string id = 1;
+  optional bytes data = 2;
+}
+
+message InsertResponse {
+}
+
+message RetrieveRequest {
+  string id = 1;
+}
+
+message RetrieveResponse {
+  optional bytes data = 1;
+}
+
+message RemoveRequest {
+  string id = 1;
+}
+
+message RemoveResponse {
+}
+
+message ScanRequest {
+  string start_key = 1;
+  string end_key = 2;
+}
+
+message Record {
+  string id = 1;
+  optional bytes payload = 2;
+}
+
+message TotalRequest {
+}
+
+message TotalResponse {
+  int64 total = 1;
+}
